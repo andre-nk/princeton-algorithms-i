@@ -1,23 +1,33 @@
+//? Define the princeton algs4.jar in classpath
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomWord {
   public static void main(String[] args) {
-    // while reading is not empty, keep going and increment
-    // in each iteration, run the bernoulli algorithm
-    int count = 0;
+    //Counting index for bernoulli algorithm
+    int index = 0;
+
+    //Global-scoped champion
     String champion = "";
 
-    while (!(StdIn.readLine().isEmpty())) {
-      count++;
-      String challenger = StdIn.readLine();
+    //Keeps iterating until the next StdIn reading / scan is empty
+    while (!StdIn.isEmpty()) {
 
-      if(StdRandom.bernoulli(1/count)){
-        champion = challenger;
+      //The current scanned word (contender)
+      String word = StdIn.readString();
+      
+      //bernoulli algorithms result (currentIndex + 1.0 (from the initial champion))
+      boolean accept = StdRandom.bernoulli(1 / (index + 1.0));
+      if (accept) {
+        champion = word;
       }
+
+      //increment
+      index++;
     }
 
-    StdOut.print(champion);
+    //print out the surviving champion
+    StdOut.println(champion);
   }
 }
